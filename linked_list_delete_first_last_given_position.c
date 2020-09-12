@@ -12,17 +12,19 @@ struct node *create_node()
     temp = (struct node *)malloc(sizeof(struct node));
     return temp;
 }
-void insert_first(int num)
+void insert_last(int num)
 {
-    struct node *temp = create_node();
+    struct node *temp = create_node(),*t=START;
     temp->data = num;
     if(START==NULL){
         START = temp;
         temp->next = NULL;
     }
     else{
-        temp->next = START;
-        START = temp;
+        while(t->next!=NULL)
+            t=t->next;
+        t->next = temp;
+        temp->next=NULL;
     }
 }
 void delete_last()
@@ -80,16 +82,23 @@ void view_list(){
     }
     printf("\n");
 }
+int find_length(struct node *temp){
+    if(temp==NULL)
+        return 0;
+    return 1+find_length(temp->next);
+}
 int main()
 {
+    struct node *list;
     int choice,position,number,pos;
     while(1){
         printf("1. Insert at last\n");
         printf("2. delete first element\n");
         printf("3. delete nth element\n");
         printf("4. delete last element\n");
-        printf("5. View list\n");
-        printf("6. Exit\n");
+        printf("5. Find length of list\n");
+        printf("6. View list\n");
+        printf("7. Exit\n");
         printf("Enter your coice : ");
         scanf("%d",&choice);
         switch(choice){
@@ -98,7 +107,7 @@ int main()
                     printf("Enter number {'0' for stop} : ");
                     scanf("%d",&number);
                     if(number!=0)
-                        insert_first(number);
+                        insert_last(number);
                     else
                         break;
                 }
@@ -115,9 +124,13 @@ int main()
                 delete_last();
                 break;
             case 5:
-                view_list();
+                list = START;
+                printf("Length of list is : %d\n",find_length(list));
                 break;
             case 6:
+                view_list();
+                break;
+            case 7:
                 printf("Thank you ...");
                 exit(0);
                 break;
