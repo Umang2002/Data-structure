@@ -1,0 +1,129 @@
+#include<stdlib.h>
+#include<stdio.h>
+struct node
+{
+    int data;
+    struct node *next;
+};
+struct node *START = NULL;
+struct node *create_node()
+{
+    struct node *temp;
+    temp = (struct node *)malloc(sizeof(struct node));
+    return temp;
+}
+void insert_first(int num)
+{
+    struct node *temp = create_node();
+    temp->data = num;
+    if(START==NULL){
+        START = temp;
+        temp->next = NULL;
+    }
+    else{
+        temp->next = START;
+        START = temp;
+    }
+}
+void delete_last()
+{
+    struct node *temp = START;
+    if(START==NULL){
+        printf("List is Empty\n");
+    }
+    else{
+        while(temp->next->next!=NULL)
+            temp=temp->next;
+        free(temp->next);
+        temp->next = NULL;
+    }
+}
+void delete_first()
+{
+    struct node *temp = START;
+    if(START==NULL){
+        printf("List is Empty\n");
+    }
+    else{
+        START = temp->next;
+        free(temp);
+    }
+}
+void delete_nth(int pos)
+{
+    struct node *temp = START, *t;
+    int count=0;
+    if(START==NULL){
+        printf("List is Empty\n");
+    }
+    else{
+        while(count!=pos-2){
+            temp=temp->next;
+            count++;
+        }
+        t=temp->next;
+        temp->next=temp->next->next;
+        free(t);
+    }
+}
+void view_list(){
+    struct node *test;
+    test = START;
+    if(START==NULL){
+        printf("List is Empty");
+    }
+    else{
+        while(test!=NULL){
+            printf("%d ",test->data);
+            test=test->next;
+        }
+    }
+    printf("\n");
+}
+int main()
+{
+    int choice,position,number,pos;
+    while(1){
+        printf("1. Insert at last\n");
+        printf("2. delete first element\n");
+        printf("3. delete nth element\n");
+        printf("4. delete last element\n");
+        printf("5. View list\n");
+        printf("6. Exit\n");
+        printf("Enter your coice : ");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:
+                while(1){
+                    printf("Enter number {'0' for stop} : ");
+                    scanf("%d",&number);
+                    if(number!=0)
+                        insert_first(number);
+                    else
+                        break;
+                }
+                break;
+            case 2:
+                delete_first();
+                break;
+            case 3:
+                printf("Enter position : ");
+                scanf("%d",&pos);
+                delete_nth(pos);
+                break;
+            case 4:
+                delete_last();
+                break;
+            case 5:
+                view_list();
+                break;
+            case 6:
+                printf("Thank you ...");
+                exit(0);
+                break;
+            default:
+                printf("Enter valid number\n");
+                break;
+        }
+    }
+}
