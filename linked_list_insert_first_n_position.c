@@ -48,14 +48,24 @@ void view_list(){
     }
     printf("\n");
 }
+int count_list(){
+    struct node *temp = START;
+    int count=0;
+    while(temp!=NULL){
+        count++;
+        temp=temp->next;
+    }
+    return count;
+}
 int main()
 {
-    int choice,position,number;
+    int choice,position,number,len;
     while(1){
         printf("1. Insert at last\n");
         printf("2. Insert at given position\n");
-        printf("3. View list\n");
-        printf("4. Exit\n");
+        printf("3. Print Length of list\n");
+        printf("4. View list\n");
+        printf("5. Exit\n");
         printf("Enter your coice : ");
         scanf("%d",&choice);
         switch(choice){
@@ -77,9 +87,12 @@ int main()
                 insert_n_position(position, number);
                 break;
             case 3:
-                view_list();
+                printf("Length of list is : %d\n",count_list());
                 break;
             case 4:
+                view_list();
+                break;
+            case 5:
                 printf("Thank you ...");
                 exit(0);
                 break;
