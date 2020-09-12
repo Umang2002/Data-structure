@@ -87,6 +87,16 @@ int find_length(struct node *temp){
         return 0;
     return 1+find_length(temp->next);
 }
+void delete_list()
+{
+    struct node *current = START, *next;
+    while(current!=NULL){
+        next = current->next;
+        free(current);
+        current = next;
+    }
+    START = NULL;
+}
 int main()
 {
     struct node *list;
@@ -96,9 +106,10 @@ int main()
         printf("2. delete first element\n");
         printf("3. delete nth element\n");
         printf("4. delete last element\n");
-        printf("5. Find length of list\n");
-        printf("6. View list\n");
-        printf("7. Exit\n");
+        printf("5. Delete entire list\n");
+        printf("6. Find length of list\n");
+        printf("7. View list\n");
+        printf("8. Exit\n");
         printf("Enter your coice : ");
         scanf("%d",&choice);
         switch(choice){
@@ -124,13 +135,16 @@ int main()
                 delete_last();
                 break;
             case 5:
+                delete_list();
+                break;
+            case 6:
                 list = START;
                 printf("Length of list is : %d\n",find_length(list));
                 break;
-            case 6:
+            case 7:
                 view_list();
                 break;
-            case 7:
+            case 8:
                 printf("Thank you ...");
                 exit(0);
                 break;
